@@ -16,7 +16,8 @@ export const ptBR: Record<MessageKey, string> = {
   'common.messageLine': 'Mensagem: {message}',
 
   'default.join.title': '👋 Bem-vindo!',
-  'default.join.message': 'Bem-vindo {user} ao **{guild}**!',
+  'default.join.message':
+    'Bem-vindo {user} ao **{guild}**! Ficamos felizes em ter você por aqui, divirta-se!',
   'default.leave.title': '👋 Até mais!',
   'default.leave.message': 'Até logo, {user}. Valeu por passar pelo **{guild}**!',
   'default.member.userId': 'ID: {id}',

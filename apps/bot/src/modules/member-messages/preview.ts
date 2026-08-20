@@ -35,13 +35,22 @@ export async function previewMemberMessage(
 ) {
   const settings = await getMemberMessageConfig(guild.id, kind);
 
+  const status = await channelStatus(
+    guild,
+    settings.channelId,
+    memberMessageLabel(locale, kind),
+    locale,
+  );
+  const payload = buildMemberMessage(
+    memberMessageTexts(settings, kind, locale),
+    member,
+    guild,
+    locale,
+    kind,
+  );
+
   return {
-    content: await channelStatus(
-      guild,
-      settings.channelId,
-      memberMessageLabel(locale, kind),
-      locale,
-    ),
-    ...buildMemberMessage(memberMessageTexts(settings, kind, locale), member, guild, locale),
+    ...payload,
+    content: [status, payload.content].filter(Boolean).join('\n'),
   };
 }

@@ -14,7 +14,8 @@ export const enUS = {
   'common.messageLine': 'Message: {message}',
 
   'default.join.title': '👋 Welcome!',
-  'default.join.message': 'Welcome {user} to **{guild}**!',
+  'default.join.message':
+    'Welcome {user} to **{guild}**! We are glad to have you here, have fun!',
   'default.leave.title': '👋 Goodbye!',
   'default.leave.message': 'See you, {user}. Thanks for hanging out on **{guild}**!',
   'default.member.userId': 'User ID: {id}',

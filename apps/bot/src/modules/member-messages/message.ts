@@ -40,6 +40,7 @@ export function formatMemberMessage(template: string, member: AnyMember, guild: 
 const LEGACY_JOIN_MESSAGES = [
   'Hey {user}, hope you have a great time on **{guild}**!',
   'Welcome {user} to **{guild}**!',
+  'Bem-vindo {user} ao **{guild}**!',
 ] as const;
 
 export function memberMessageTexts(
@@ -69,6 +70,7 @@ export function buildMemberMessage(
   member: AnyMember,
   guild: Guild,
   locale: Locale,
+  kind: MemberMessageKind,
 ) {
   const avatar = member.user?.displayAvatarURL({ size: 256 });
   const embed = BaseEmbed()
@@ -79,5 +81,7 @@ export function buildMemberMessage(
     .setFooter({ text: t(locale, 'default.member.userId', { id: member.id }) })
     .setTimestamp();
 
-  return { embeds: [embed] };
+  if (kind !== 'join') return { embeds: [embed] };
+
+  return { content: `<@${member.id}>`, embeds: [embed] };
 }

@@ -71,7 +71,7 @@ export async function announceMemberMessage(member: AnyMember, kind: MemberMessa
     const locale = await guildLocale(guild);
     const texts = memberMessageTexts(settings, kind, locale);
 
-    await channel.send(buildMemberMessage(texts, member, guild, locale));
+    await channel.send(buildMemberMessage(texts, member, guild, locale, kind));
     logger.info({ ...context, channelId: channel.id }, 'member alert sent');
   } catch (error) {
     if (isUnknownChannelError(error)) {
