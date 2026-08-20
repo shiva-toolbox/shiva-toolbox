@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: shiva
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shiva}
+      POSTGRES_DB: shiva_toolbox
+    volumes:
+      - shiva_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shiva -d shiva_toolbox"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  bot:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - apps/bot/.env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://shiva:${POSTGRES_PASSWORD:-shiva}@postgres:5432/shiva_toolbox?schema=public
+      BOT_DEV_GUILD_ID: ""
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "pnpm --filter @shiva/database migrate:deploy && pnpm --filter @shiva/bot start"
+
+volumes:
+  shiva_pg:

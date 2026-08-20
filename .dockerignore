@@ -1,0 +1,11 @@
+node_modules
+.git
+.turbo
+.cursor
+**/.env
+**/.env.local
+**/generated
+dist
+.next
+*.log
+README.md

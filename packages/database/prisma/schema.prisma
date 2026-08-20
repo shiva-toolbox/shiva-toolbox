@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Guild {
+  id        String        @id
+  name      String
+  icon      String?
+  ownerId   String
+  locale    String        @default("en-US")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  modules   GuildModule[]
+}
+
+model GuildModule {
+  id        String   @id @default(cuid())
+  guildId   String
+  moduleId  String
+  enabled   Boolean  @default(false)
+  config    Json     @default("{}")
+  updatedAt DateTime @updatedAt
+  guild     Guild    @relation(fields: [guildId], references: [id], onDelete: Cascade)
+
+  @@unique([guildId, moduleId])
+  @@index([moduleId, enabled])
+}
+
+model StreamAlert {
+  id          String   @id @default(cuid())
+  guildId     String
+  platform    String
+  platformId  String
+  login       String
+  displayName String
+  channelId   String
+  lastVideoId String?
+  createdAt   DateTime @default(now())
+
+  @@unique([guildId, platform, platformId])
+  @@index([platform])
+}
+
+model ReactionRole {
+  id        String   @id @default(cuid())
+  guildId   String
+  channelId String
+  messageId String
+  emoji     String
+  roleId    String
+  createdAt DateTime @default(now())
+
+  @@unique([messageId, emoji])
+  @@index([guildId])
+  @@index([roleId])
+  @@index([channelId])
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["NODE_ENV"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "^generate"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "LOG_LEVEL",
+        "DISCORD_TOKEN",
+        "DISCORD_CLIENT_ID",
+        "DISCORD_CLIENT_SECRET",
+        "DISCORD_PUBLIC_KEY",
+        "DATABASE_URL",
+        "BOT_DEV_GUILD_ID",
+        "DASHBOARD_URL",
+        "WEB_URL",
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET",
+        "YOUTUBE_API_KEY",
+        "TWITCH_CLIENT_ID",
+        "TWITCH_CLIENT_SECRET"
+      ],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "env": [
+        "LOG_LEVEL",
+        "DISCORD_TOKEN",
+        "DISCORD_CLIENT_ID",
+        "DISCORD_CLIENT_SECRET",
+        "DISCORD_PUBLIC_KEY",
+        "DATABASE_URL",
+        "BOT_DEV_GUILD_ID",
+        "DASHBOARD_URL",
+        "WEB_URL",
+        "NEXTAUTH_URL",
+        "NEXTAUTH_SECRET",
+        "YOUTUBE_API_KEY",
+        "TWITCH_CLIENT_ID",
+        "TWITCH_CLIENT_SECRET"
+      ],
+      "inputs": ["$TURBO_DEFAULT$", ".env.development.local", ".env.local", ".env.development", ".env"]
+    },
+    "generate": {
+      "cache": false,
+      "env": ["DATABASE_URL"]
+    },
+    "lint": {
+      "dependsOn": ["^generate"]
+    },
+    "typecheck": {
+      "dependsOn": ["^generate"]
+    }
+  }
+}

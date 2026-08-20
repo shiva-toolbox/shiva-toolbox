@@ -1,0 +1,39 @@
+{
+  "name": "shiva-toolbox",
+  "private": true,
+  "description": "Bot do Discord com dashboard e landing — autocargo, alertas e integrações.",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:bot": "turbo dev --filter=@shiva/bot",
+    "dev:dashboard": "turbo dev --filter=@shiva/dashboard",
+    "dev:web": "turbo dev --filter=@shiva/web",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "db:generate": "pnpm --filter @shiva/database generate",
+    "db:migrate": "pnpm --filter @shiva/database migrate",
+    "db:deploy": "pnpm --filter @shiva/database migrate:deploy",
+    "db:baseline": "pnpm --filter @shiva/database migrate:baseline",
+    "db:studio": "pnpm --filter @shiva/database studio",
+    "db:up": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d postgres"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "turbo": "^2.5.5",
+    "typescript": "^5.9.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "unrs-resolver"
+    ]
+  }
+}
